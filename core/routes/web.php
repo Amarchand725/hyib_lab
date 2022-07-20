@@ -366,9 +366,6 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::middleware(['checkStatus'])->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
-            Route::get('change-password', 'UserController@changePassword')->name('change-password');
-            Route::post('change-password', 'UserController@submitPassword');
-
             //Balance Transfer
             Route::get('transfer-balance','UserController@transfer')->name('transfer.balance');
             Route::post('transfer-balance','UserController@transferSubmit');
@@ -404,6 +401,10 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
             Route::post('profile-setting', 'UserController@submitProfile');
+
+            Route::get('change-password', 'UserController@changePassword')->name('change-password');
+            Route::post('change-password', 'UserController@submitPassword');
+            Route::post('mobile-number', 'UserController@updateMobile');
 
             Route::post('add_joint_account', 'JointAccountController@add_joint_account')->name('add.joint.account');
 

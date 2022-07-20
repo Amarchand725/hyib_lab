@@ -322,15 +322,18 @@
                                                 <p>To change your password, enter your current password and then create a new one using the following form.</p>
                                                 <label for="current_password">CURRENT PASSWORD</label>
                                                 <input type="password" class="form-control" id="current_password" placeholder="password">
+                                                <span id="error-current_password" style="color: red"></span>
                                                 <br>
-                                                <label for="new_password">NEW PASSWORD</label>
-                                                <input type="password" class="form-control" id="new_password" placeholder="New password">
-                                                <small>Must be at least 8 characters long, and must include one letter and one number</small>
+                                                <label for="password">NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="password" placeholder="New password">
+                                                <small>Must be at least 8 characters long, and must include one letter and one number</small><br />
+                                                <span id="error-password" style="color: red"></span>
 
                                                 <br><br>
-                                                <label for="confirm_password">CONFIRM NEW PASSWORD</label>
-                                                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm New password">
-                                                <small>Type your new password again.</small>
+                                                <label for="confirmed">CONFIRM NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="confirmed" placeholder="Confirm New password">
+                                                <small>Type your new password again.</small><br />
+                                                <span id="error-confirmed" style="color: red"></span>
 
                                                 <div class="row">
                                                     <div class="col">
@@ -368,14 +371,10 @@
                                                 <tr>
                                                     <td>Phone number </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>
-                                                        (234) 342-4244
-                                                    </td>
+                                                    <td>{{ Auth::user()->mobile }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        Status
-                                                    </td>
+                                                    <td>Status</td>
                                                     <td colspan="5" class="d-flex"></td>
                                                     <td>
                                                         <i class="fa fa-ban"></i> Unverified
@@ -385,26 +384,29 @@
                                         </table>
 
                                         <!-- on click show this 5th tab div -->
-                                        <div class="form-card d-none" id="editnum">
-                                            <label for="exampleFormControlInput1">PHONE NUMBER</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="(234) 342-4244">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-start    pt-4">
-                                                        <button id="cancel_edit_num" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                            <small>Cancel</small> </button>
+                                        <form id="mobile-number-form">
+                                            <div class="form-card d-none" id="editnum">
+                                                <label for="mobile">PHONE NUMBER</label>
+                                                <input type="number" class="form-control" value="{{ Auth::user()->mobile }}" id="mobile" placeholder="Enter mobile number">
+                                                <span id="error-mobile" style="color: red"></span>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-start    pt-4">
+                                                            <button id="cancel_edit_num" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
+                                                                <small>Cancel</small> </button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end pt-4">
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> 
-                                                            Verify </button>
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-end pt-4">
+                                                            <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> 
+                                                                Verify </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- 5th  tab ends -->
 
@@ -767,33 +769,27 @@
     </main>
 @endsection
 @section('js')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $('#password-form').on('submit',function(e){
+    $('#mobile-number-form').on('submit',function(e){
         e.preventDefault();
-        let current_password = $('#current_password').val();
-        let new_password = $('#new_password').val();
-        let confirm_password = $('#confirm_password').val();
-        // console.log(current_password+' -- '+new_password+' -- '+confirm_password);
+        let mobile = $('#mobile').val();
 
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "{{ url('user/profile-setting') }}",
+            url: "{{ url('user/mobile-number') }}",
             type:"POST",
             data:{
-                current_password : current_password,
-                new_password : new_password,
-                confirm_password : confirm_password,
+                mobile : mobile,
             },
-            
             success:function(response){
-                console.log(response);
-                /* if(response=='success'){
+                if(response=='success'){
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'You have updated personal information successfully.',
+                        title: 'You have updated mobile number successfully.',
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -803,16 +799,53 @@
                         title: 'Oops...',
                         text: 'Something went wrong try again.',
                     })
-                } */
+                }
             },
             error: function(response) {
-                $('#error-firstname').text(response.responseJSON.errors.firstname);
-                $('#error-lastname').text(response.responseJSON.errors.lastname);
-                $('#error-address_first').text(response.responseJSON.errors.address_first);
-                $('#error-state').text(response.responseJSON.errors.state);
-                $('#error-zip').text(response.responseJSON.errors.zip);
-                $('#error-city').text(response.responseJSON.errors.city);
-                $('#error-country').text(response.responseJSON.errors.country);
+                $('#error-mobile').text(response.responseJSON.errors.mobile);
+            },
+        });
+    });
+
+    $('#password-form').on('submit',function(e){
+        e.preventDefault();
+        let current_password = $('#current_password').val();
+        let password = $('#password').val();
+        let confirmed = $('#confirmed').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{ url('user/change-password') }}",
+            type:"POST",
+            data:{
+                current_password : current_password,
+                password : password,
+                confirmed : confirmed,
+            },
+            
+            success:function(response){
+                if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated password successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                }
+            },
+            error: function(response) {
+                $('#error-current_password').text(response.responseJSON.errors.current_password);
+                $('#error-password').text(response.responseJSON.errors.password);
+                $('#error-confirmed').text(response.responseJSON.errors.confirmed);
             },
         });
     });

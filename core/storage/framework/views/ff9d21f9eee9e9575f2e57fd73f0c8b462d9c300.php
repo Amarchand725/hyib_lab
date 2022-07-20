@@ -19,7 +19,6 @@
                         <div class="card-body">
                             <!-- Vertical Pills Tabs -->
                             <div class="d-flex align-items-start">
-                                <!-- <h5 class="card-title">Vertical Pills Tabs</h5> -->
                                 <div class="nav flex-column nav-pills me-3 py-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Personal Information</button>
                                     <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Notifications</button>
@@ -46,90 +45,110 @@
                                                 <tr>
                                                     <td>Full name </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>Farhan Aslam</td>
+                                                    <td><?php echo e(Auth::user()->firstname); ?> <?php echo e(Auth::user()->lastname); ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Address </td>
+                                                    <td>Address 1 </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>Abs kahi
-                                                    </td>
+                                                    <td><?php echo e(Auth::user()->address->address1??''); ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Address 2 </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>St-24 karachi </td>
+                                                    <td><?php echo e(Auth::user()->address->address2??''); ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>City</td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>Canassa</td>
+                                                    <td><?php echo e(Auth::user()->address->city??''); ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>State </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>AU </td>
+                                                    <td><?php echo e(Auth::user()->address->state??''); ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td>ZIP Code </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>1232 </td>
+                                                    <td><?php echo e(Auth::user()->address->zip??''); ?> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Country </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>AU </td>
+                                                    <td><?php echo e(Auth::user()->address->country??''); ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <!-- on click it shws -->
                                         <div class="form-card d-none" id="editinfo">
-                                            <h2 style="font-size: 20px;">Contact Information</h2>
-                                            <div class=" forms_edits">
-                                                <label for="exampleFormControlInput1">ADDRESS LINE 1</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
-                                                <small>This should be the address used for tax purposes</small>
-                                            </div>
-                                            <div class="forms_edits">
-                                                <label for="exampleFormControlInput1">ADDRESS LINE 2</label>
-                                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
-                                                <!-- <small>This should be the address used for tax purposes</small> -->
-                                            </div>
-                                            <div class="form-row forms_edits">
-                                                <div class="form-group col-md-8">
-                                                    <label for="inputCity">City</label>
-                                                    <input type="text" class="form-control" id="inputCity">
-                                                </div>
-                                                <div class="form-group col-md-4 forms_edits">
-                                                    <label for="inputState">State</label>
-                                                    <select id="inputState" class="form-control">
-                                                <option selected="">Choose...</option>
-                                                <option>...</option>
-                                              </select>
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <label for="inputZip">ZIP CODE</label>
-                                                    <input type="text" class="form-control" id="inputZip">
-                                                </div>
-                                                <div class="form-group col-12">
-                                                    <label for="inputAddress">PHONE NUMBER (MOBILE PREFERRED)</label>
-                                                    <input type="text" class="form-control" id="inputAddress" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-start    pt-4">
-                                                        <button id="cancel_edit" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                    <small>Cancel</small> </button>
+                                            <h2 style="font-size: 20px;">Personal Information</h2>
+                                            <form id="personal-info-form">
+                                                <div class="row">
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="firstname">First Name</label>
+                                                        <input type="text" class="form-control" id="firstname" value="<?php echo e(Auth::user()->firstname); ?>" placeholder="Enter first name">
+                                                        <small id="error-firstname" style="color: red"></small>
+                                                    </div>
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="lastname">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastname" value="<?php echo e(Auth::user()->lastname); ?>" placeholder="Enter last name">
+                                                        <small id="error-lastname" style="color: red"></small>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end   pt-4">
-
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Save </button>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="address_first">Address 1</label>
+                                                        <input type="text" class="form-control" id="address_first" value="<?php echo e(Auth::user()->address->address1??''); ?>" placeholder="Enter first address">
+                                                        <small id="error-address_first" style="color: red"></small>
+                                                    </div>
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="address_second">Address 2</label>
+                                                        <input type="text" class="form-control" id="address_second" value="<?php echo e(Auth::user()->address->address2??''); ?>" placeholder="Enter second address">
+                                                        <small id="error-first-second" style="color: red"></small>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" id="city" value="<?php echo e(Auth::user()->address->city??''); ?>" placeholder="Enter city name">
+                                                        <small id="error-city" style="color: red"></small>
+                                                    </div>
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="state">State</label>
+                                                        <input type="text" class="form-control" id="state" value="<?php echo e(Auth::user()->address->state??''); ?>" placeholder="Enter state name">
+                                                        <small id="error-state" style="color: red"></small>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="zip">Zip Code</label>
+                                                        <input type="text" class="form-control" id="zip" value="<?php echo e(Auth::user()->address->zip??''); ?>" placeholder="Enter zip code">
+                                                        <small id="error-zip" style="color: red"></small>
+                                                    </div>
+                                                    <div class="col-sm-6 forms_edits">
+                                                        <label for="country">Country</label>
+                                                        <input type="text" class="form-control" id="country" value="<?php echo e(Auth::user()->address->country??''); ?>" placeholder="Enter country name">
+                                                        <small id="error-country" style="color: red"></small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-start pt-4">
+                                                            <button id="cancel_edit" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
+                                                            <small>Cancel</small> </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-end   pt-4">
+                                                            <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Save </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                         <!-- on click it shws  ends-->
                                     </div>
@@ -172,40 +191,57 @@
                                         <!-- on click it show 2nd tab -->
                                         <div class="form-card d-none" id="editnotif">
                                             <div class="card-body">
-                                                <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> &nbsp; I would like to receive email notifications about:
+                                                <input class="form-check-input me-1" id="email-notification" type="checkbox" value="" aria-label="..."> &nbsp; 
+                                                <label label for='email-notification'> I would like to receive email notifications about: </label>
                                                 <!-- List group With Checkboxes and radios -->
                                                 <ul class="list-group py-3">
                                                     <li class="list-group-item">
-                                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> Insights and Resources <br>
-                                                        <span><small>Investor tips, articles, white papers, and other information to help you get the most out of
-                                                    Fundrise.</small></span>
+                                                        <input class="form-check-input me-1" type="checkbox" id="insights" value="" aria-label="..."> 
+                                                        <label label for='insights'> Insights and Resources </label>
+                                                        <br>
+                                                        <span>
+                                                            <small>
+                                                                Investor tips, articles, white papers, and other information to help you get the most out of Fundrise.
+                                                            </small>
+                                                        </span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> Product and Feature Announcements <br>
+                                                        <input class="form-check-input me-1" id="product-feature" type="checkbox" value="" aria-label="..."> 
+                                                        <label label for='product-feature'> Product and Feature Announcements </label>
+                                                        <br>
                                                         <span>
                                                             <small>New product launches, offerings, and investment features. </small>
                                                         </span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> Portfolio Performance <br>
-                                                        <span><small>
-                                                    Updates and account reminders about your Fundrise investments.
-                                        
-                                                  </small></span>
+                                                        <input class="form-check-input me-1" id="portfolio" type="checkbox" value="" aria-label="..."> 
+                                                        <label label for='portfolio'> Portfolio Performance </label>
+                                                        <br>
+                                                        <span>
+                                                            <small>
+                                                                Updates and account reminders about your Fundrise investments.
+                                                            </small>
+                                                        </span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> Project Updates <br>
-                                                        <span><small>
-                                                    Progress updates about the projects included in your portfolio.
-                                        
-                                                  </small></span>
+                                                        <input class="form-check-input me-1" id="project-updates" type="checkbox" value="" aria-label="..."> 
+                                                        <label label for='project-updates'> Project Updates </label>
+                                                        <br>
+                                                        <span>
+                                                            <small>
+                                                                Progress updates about the projects included in your portfolio.
+                                                            </small>
+                                                        </span>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..."> Newsletter <br>
-                                                        <span><small>
-                                                    A weekly newsletter dedicated to long-term thinking.
-                                        
-                                                  </small></span>
+                                                        <input class="form-check-input me-1" id="newsletter" type="checkbox" value="" aria-label="..."> 
+                                                        <label label for='newsletter'> Newsletter </label>
+                                                        <br>
+                                                        <span>
+                                                            <small>
+                                                                A weekly newsletter dedicated to long-term thinking.
+                                                            </small>
+                                                        </span>
                                                     </li>
                                                 </ul>
                                                 <!-- End List Checkboxes and radios -->
@@ -238,16 +274,16 @@
                                                 <tr>
                                                     <td>My Email </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>farhan_aslam@gmail.com </td>
+                                                    <td><?php echo e(Auth::user()->email); ?></td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <!-- on click show this 3rd tab div -->
                                         <div class="form-card d-none" id="editemail">
-                                            <p>Fundrise uses this email address to contact you with important information regarding the status of your account. Please keep it current.</p>
-                                            <label for="exampleFormControlInput1">ADDRESS LINE 1</label>
-                                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                            <p>HYIPLAB uses this email address to contact you with important information regarding the status of your account. Please keep it current.</p>
+                                            <label for="email">ADDRESS LINE 1</label>
+                                            <input type="email" name="email" disabled value="<?php echo e(Auth::user()->email); ?>" class="form-control" id="email" placeholder="">
                                             <small>This should be the address used for tax purposes</small>
                                             <div class="row">
                                                 <div class="col">
@@ -256,11 +292,7 @@
                                                     <small>Cancel</small> </button>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end   pt-4">
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Save </button>
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -275,44 +307,48 @@
                                                 <tr>
                                                     <td>Password </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>******* </td>
+                                                    <td>*******</td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <!-- on click show this 4rd tab div -->
-                                        <div class="form-card d-none" id="editpass">
-                                            <p>To change your password, enter your current password and then create a new one using the following form.</p>
-                                            <label for="exampleFormControlInput1">CURRENT PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="password">
-                                            <br>
-                                            <label for="exampleFormControlInput1">NEW PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="New password">
-                                            <small>Must be at least 8 characters long, and must include one letter and one number</small>
+                                        <form id="password-form">
+                                            <div class="form-card d-none" id="editpass">
+                                                <p>To change your password, enter your current password and then create a new one using the following form.</p>
+                                                <label for="current_password">CURRENT PASSWORD</label>
+                                                <input type="password" class="form-control" id="current_password" placeholder="password">
+                                                <span id="error-current_password" style="color: red"></span>
+                                                <br>
+                                                <label for="password">NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="password" placeholder="New password">
+                                                <small>Must be at least 8 characters long, and must include one letter and one number</small><br />
+                                                <span id="error-password" style="color: red"></span>
 
-                                            <br><br>
-                                            <label for="exampleFormControlInput1">CONFIRM NEW PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Confirm New password">
-                                            <small>Type your new password again.</small>
+                                                <br><br>
+                                                <label for="confirmed">CONFIRM NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="confirmed" placeholder="Confirm New password">
+                                                <small>Type your new password again.</small><br />
+                                                <span id="error-confirmed" style="color: red"></span>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-start    pt-4">
-                                                        <button id="cancel_edit_pass" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                          <small>Cancel</small> </button>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-start    pt-4">
+                                                            <button id="cancel_edit_pass" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
+                                                            <small>Cancel</small> </button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end pt-4">
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Change Password </button>
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-end pt-4">
+                                                            <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Change Password </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- 4rd  tab ends -->
-
 
                                     <!-- 5th  tab strats -->
                                     <div class="tab-pane fade" id="v-pills-number" role="tabpanel" aria-labelledby="v-pills-number-tab">
@@ -331,14 +367,10 @@
                                                 <tr>
                                                     <td>Phone number </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>
-                                                        (234) 342-4244
-                                                    </td>
+                                                    <td><?php echo e(Auth::user()->mobile); ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        Status
-                                                    </td>
+                                                    <td>Status</td>
                                                     <td colspan="5" class="d-flex"></td>
                                                     <td>
                                                         <i class="fa fa-ban"></i> Unverified
@@ -348,26 +380,29 @@
                                         </table>
 
                                         <!-- on click show this 5th tab div -->
-                                        <div class="form-card d-none" id="editnum">
-                                            <label for="exampleFormControlInput1">PHONE NUMBER</label>
-                                            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="(234) 342-4244">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-start    pt-4">
-                                                        <button id="cancel_edit_num" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                            <small>Cancel</small> </button>
+                                        <form id="mobile-number-form">
+                                            <div class="form-card d-none" id="editnum">
+                                                <label for="mobile">PHONE NUMBER</label>
+                                                <input type="number" class="form-control" value="<?php echo e(Auth::user()->mobile); ?>" id="mobile" placeholder="Enter mobile number">
+                                                <span id="error-mobile" style="color: red"></span>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-start    pt-4">
+                                                            <button id="cancel_edit_num" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
+                                                                <small>Cancel</small> </button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end pt-4">
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> 
-                                                            Verify </button>
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-end pt-4">
+                                                            <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> 
+                                                                Verify </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- 5th  tab ends -->
 
@@ -421,11 +456,9 @@
                                     </div>
                                     <!-- 6th  tab ends -->
 
-
                                     <!-- 7th  tab strats -->
                                     <div class="tab-pane fade" id="v-pills-investment" role="tabpanel" aria-labelledby="v-pills-investment-tab">
                                         <h5 class="card-title">Investment Plan</h5>
-
                                         <table class="table table-borderless table-responsive d-block" id="view_nick">
                                             <tbody>
                                                 <tr>
@@ -433,22 +466,17 @@
                                                         Individual Account No. 1677652
                                                     </td>
                                                 </tr>
-
                                                 <tr>
-
                                                     <td>You must upgrade to a Core account to unlock the Standard plans
                                                         <a href="#">Upgrade Now</a>
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td>Investment Plan
                                                     </td>
                                                     <td colspan="3" class="d-flex"></td>
-
                                                     <td>
                                                         Starter Portfolio
-
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -642,7 +670,7 @@
                                         </span>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">JOINT ACCOUNT TYPE</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
+                                            <select class="form-control" id="account_type_1" name="account_type">
                                                 <option>Rights of Survivorship</option>
                                                 <option>Tenats in common</option>
                                                 <option>Community in property</option>
@@ -650,31 +678,33 @@
                                         </div>
                                         <div class=" forms_edits">
                                             <label for="exampleFormControlInput1"><b>Account Holder 1</b></label> <br>
-                                            <label for="exampleFormControlInput1">ADDRESS LINE 1</label>
-                                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                            <label for="">ADDRESS LINE 1</label>
+                                            <input type="text" class="form-control" id="line_address_1_1" name="line_address_1" placeholder="">
                                             <small>This should be the address used for tax purposes</small>
                                         </div>
 
                                         <div class=" forms_edits">
                                             <label for="exampleFormControlInput1">ADDRESS LINE 2</label>
-                                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                            <input type="text" class="form-control" id="line_address_2_1" name="line_address_2" placeholder="">
                                         </div>
 
                                         <div class="form-group col-md-8">
                                             <label for="inputCity">City</label>
-                                            <input type="text" class="form-control" id="inputCity">
+                                            <input type="text" class="form-control" id="city1" name="city">
                                         </div>
 
                                         <div class="form-group col-md-4 forms_edits">
                                             <label for="inputState">State</label>
-                                            <select id="inputState" class="form-control">
+                                            <select id="state1" class="form-control" name="state">
                                                 <option selected="">Choose...</option>
-                                                <option>...</option>
+                                                <option>California</option>
+                                                <option>Texas</option>
+                                                
                                             </select>
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label for="inputZip">ZIP CODE</label>
-                                            <input type="text" class="form-control" id="inputZip">
+                                            <input type="text" class="form-control" name="zip_code" id="zip_code1">
                                         </div>
                                         <!-- account 2 -->
 
@@ -735,7 +765,144 @@
     </main>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    $('#mobile-number-form').on('submit',function(e){
+        e.preventDefault();
+        let mobile = $('#mobile').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "<?php echo e(url('user/mobile-number')); ?>",
+            type:"POST",
+            data:{
+                mobile : mobile,
+            },
+            success:function(response){
+                if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated mobile number successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                }
+            },
+            error: function(response) {
+                $('#error-mobile').text(response.responseJSON.errors.mobile);
+            },
+        });
+    });
+
+    $('#password-form').on('submit',function(e){
+        e.preventDefault();
+        let current_password = $('#current_password').val();
+        let password = $('#password').val();
+        let confirmed = $('#confirmed').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "<?php echo e(url('user/change-password')); ?>",
+            type:"POST",
+            data:{
+                current_password : current_password,
+                password : password,
+                confirmed : confirmed,
+            },
+            
+            success:function(response){
+                if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated password successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                }
+            },
+            error: function(response) {
+                $('#error-current_password').text(response.responseJSON.errors.current_password);
+                $('#error-password').text(response.responseJSON.errors.password);
+                $('#error-confirmed').text(response.responseJSON.errors.confirmed);
+            },
+        });
+    });
+
+    $('#personal-info-form').on('submit',function(e){
+        e.preventDefault();
+        let firstname = $('#firstname').val();
+        let lastname = $('#lastname').val();
+        let address_first = $('#address_first').val();
+        let address_second = $('#address_second').val();
+        let city = $('#city').val();
+        let state = $('#state').val();
+        let zip = $('#zip').val();
+        let country = $('#country').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "<?php echo e(url('user/profile-setting')); ?>",
+            type:"POST",
+            data:{
+                firstname : firstname,
+                lastname : lastname,
+                address_first : address_first,
+                address_second : address_second,
+                state : state,
+                zip : zip,
+                city : city,
+                country : country,
+            },
+            
+            success:function(response){
+                if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated personal information successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                }
+            },
+            error: function(response) {
+                $('#error-firstname').text(response.responseJSON.errors.firstname);
+                $('#error-lastname').text(response.responseJSON.errors.lastname);
+                $('#error-address_first').text(response.responseJSON.errors.address_first);
+                $('#error-state').text(response.responseJSON.errors.state);
+                $('#error-zip').text(response.responseJSON.errors.zip);
+                $('#error-city').text(response.responseJSON.errors.city);
+                $('#error-country').text(response.responseJSON.errors.country);
+            },
+        });
+    });
+
     $('.edit_info_class').click(function(event) {
         event.preventDefault();
         $('#viewinfo').removeClass('d-block');
@@ -888,4 +1055,4 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make($activeTemplate.'user.dashboard.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\towork\core\resources\views/templates/bit_gold/user/profile_settings.blade.php ENDPATH**/ ?>
+<?php echo $__env->make($activeTemplate.'user.dashboard.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hyib_lab\core\resources\views/templates/bit_gold/user/profile_settings.blade.php ENDPATH**/ ?>

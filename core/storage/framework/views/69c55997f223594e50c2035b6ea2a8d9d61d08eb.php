@@ -504,4 +504,4 @@
 </script>
 </body>
 
-</html><?php /**PATH C:\xampp\htdocs\clone_fundrise\core\resources\views/templates/bit_gold/user/dashboard/master.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\hyib_lab\core\resources\views/templates/bit_gold/user/dashboard/master.blade.php ENDPATH**/ ?>

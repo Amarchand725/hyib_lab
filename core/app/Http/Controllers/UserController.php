@@ -77,8 +77,9 @@ class UserController extends Controller
         ];
 
         $user->fill($in)->save();
-        $notify[] = ['success', 'Profile Updated successfully.'];
-        return back()->withNotify($notify);
+        /* $notify[] = ['success', 'Profile Updated successfully.'];
+        return back()->withNotify($notify); */
+        return 'success';
     }
 
     public function changePassword()
@@ -89,10 +90,9 @@ class UserController extends Controller
 
     public function submitPassword(Request $request)
     {
-
         $this->validate($request, [
             'current_password' => 'required',
-            'password' => 'required|min:5|confirmed'
+            'password' => 'required|same:confirmed',
         ]);
         try {
             $user = auth()->user();
@@ -100,15 +100,35 @@ class UserController extends Controller
                 $password = Hash::make($request->password);
                 $user->password = $password;
                 $user->save();
-                $notify[] = ['success', 'Password Changes successfully.'];
-                return back()->withNotify($notify);
+                /* $notify[] = ['success', 'Password Changes successfully.'];
+                return back()->withNotify($notify); */
+                return 'success';
             } else {
-                $notify[] = ['error', 'Current password not match.'];
-                return back()->withNotify($notify);
+                /* $notify[] = ['error', 'Current password not match.'];
+                return back()->withNotify($notify); */
+                return 'failed';
             }
         } catch (\PDOException $e) {
-            $notify[] = ['error', $e->getMessage()];
-            return back()->withNotify($notify);
+            /* $notify[] = ['error', $e->getMessage()];
+            return back()->withNotify($notify); */
+            return 'failed';
+        }
+    }
+
+    public function updateMobile(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required',
+        ]);
+        try {
+            $user = auth()->user();
+            $user->mobile = $request->mobile;
+            $user->save();
+            return 'success';
+        } catch (\PDOException $e) {
+            /* $notify[] = ['error', $e->getMessage()];
+            return back()->withNotify($notify); */
+            return 'failed';
         }
     }
 
