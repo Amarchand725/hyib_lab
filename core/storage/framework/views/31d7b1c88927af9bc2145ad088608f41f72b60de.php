@@ -45,6 +45,4 @@
     $(document).on('click', '.fa_eye', function(){
         $('#password').attr('type', 'text');
     });
-</script>
-
-<?php /**PATH C:\xampp\htdocs\clone_fundrise\core\resources\views/templates/bit_gold/user/auth/questionnaire/ajax_user_password.blade.php ENDPATH**/ ?>
+</script><?php /**PATH C:\xampp\htdocs\clone_fundrise\core\resources\views/templates/bit_gold/user/auth/questionnaire/ajax_user_password.blade.php ENDPATH**/ ?>

@@ -56,4 +56,4 @@
                    </form>
            </div>
        </section>
-   </div><?php /**PATH C:\xampp\htdocs\clone_fundrise\core\resources\views/templates/bit_gold/user/auth/questionnaire/questions.blade.php ENDPATH**/ ?>
+   </div>   <?php /**PATH C:\xampp\htdocs\clone_fundrise\core\resources\views/templates/bit_gold/user/auth/questionnaire/questions.blade.php ENDPATH**/ ?>

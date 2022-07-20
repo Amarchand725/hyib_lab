@@ -54,48 +54,28 @@ class UserController extends Controller
 
     public function submitProfile(Request $request)
     {
-        return $request;
         $user = Auth::user();
         $request->validate([
             'firstname' => 'required|string|max:50',
             'lastname' => 'required|string|max:50',
-            'address' => "sometimes|required|max:80",
-            'state' => 'sometimes|required|max:80',
-            'zip' => 'sometimes|required|max:40',
-            'city' => 'sometimes|required|max:50',
-            'image' => 'mimes:png,jpg,jpeg'
-        ],[
-            'firstname.required'=>'First Name Field is required',
-            'lastname.required'=>'Last Name Field is required'
+            'address_first' => "required|required|max:255",
+            'state' => 'required|required|max:80',
+            'zip' => 'required|required|max:40',
+            'city' => 'required|required|max:50',
+            'country' => 'required|required|max:50',
         ]);
-
 
         $in['firstname'] = $request->firstname;
         $in['lastname'] = $request->lastname;
-        $country = @$user->address->country;
         $in['address'] = [
-            'address' => $request->address,
+            'address1' => $request->address_first,
+            'address2' => $request->address_second,
             'state' => $request->state,
             'zip' => $request->zip,
-            'country' => $country,
+            'country' => $request->city,
             'city' => $request->city,
         ];
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '_' . $user->username . '.jpg';
-            $location = imagePath()['profile']['path'] .'/'. $filename;
-            $in['image'] = $filename;
-
-            $path = imagePath()['profile']['path'] .'/';
-            $link = $path . $user->image;
-            if (file_exists($link)) {
-                @unlink($link);
-            }
-            $image = Image::make($image);
-            $image->resize(800, 800);
-            $image->save($location);
-        }
         $user->fill($in)->save();
         $notify[] = ['success', 'Profile Updated successfully.'];
         return back()->withNotify($notify);

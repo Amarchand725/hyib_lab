@@ -82,17 +82,17 @@
                                         <!-- on click it shws -->
                                         <div class="form-card d-none" id="editinfo">
                                             <h2 style="font-size: 20px;">Personal Information</h2>
-                                            <form action="" method="">
+                                            <form id="personal-info-form">
                                                 <div class="row">
                                                     <div class="col-sm-6 forms_edits">
-                                                        <label for="first_name">First Name</label>
-                                                        <input type="text" class="form-control" id="first_name" value="{{ Auth::user()->firstname }}" placeholder="Enter first name">
-                                                        <small id="error-first-name" style="color: red"></small>
+                                                        <label for="firstname">First Name</label>
+                                                        <input type="text" class="form-control" id="firstname" value="{{ Auth::user()->firstname }}" placeholder="Enter first name">
+                                                        <small id="error-firstname" style="color: red"></small>
                                                     </div>
                                                     <div class="col-sm-6 forms_edits">
-                                                        <label for="last_name">First Name</label>
-                                                        <input type="text" class="form-control" id="last_name" value="{{ Auth::user()->lastname }}" placeholder="Enter last name">
-                                                        <small id="error-last-name" style="color: red"></small>
+                                                        <label for="lastname">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastname" value="{{ Auth::user()->lastname }}" placeholder="Enter last name">
+                                                        <small id="error-lastname" style="color: red"></small>
                                                     </div>
                                                 </div>
                                                 <br />
@@ -100,7 +100,7 @@
                                                     <div class="col-sm-6 forms_edits">
                                                         <label for="address_first">Address 1</label>
                                                         <input type="text" class="form-control" id="address_first" value="{{ Auth::user()->address->address1??'' }}" placeholder="Enter first address">
-                                                        <small id="error-first-address" style="color: red"></small>
+                                                        <small id="error-address_first" style="color: red"></small>
                                                     </div>
                                                     <div class="col-sm-6 forms_edits">
                                                         <label for="address_second">Address 2</label>
@@ -124,9 +124,9 @@
                                                 <br />
                                                 <div class="row">
                                                     <div class="col-sm-6 forms_edits">
-                                                        <label for="zip_code">Zip Code</label>
-                                                        <input type="text" class="form-control" id="zip_code" value="{{ Auth::user()->address->zip??'' }}" placeholder="Enter zip code">
-                                                        <small id="error-zip-code" style="color: red"></small>
+                                                        <label for="zip">Zip Code</label>
+                                                        <input type="text" class="form-control" id="zip" value="{{ Auth::user()->address->zip??'' }}" placeholder="Enter zip code">
+                                                        <small id="error-zip" style="color: red"></small>
                                                     </div>
                                                     <div class="col-sm-6 forms_edits">
                                                         <label for="country">Country</label>
@@ -137,9 +137,9 @@
 
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class=" d-flex justify-content-start    pt-4">
+                                                        <div class=" d-flex justify-content-start pt-4">
                                                             <button id="cancel_edit" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                        <small>Cancel</small> </button>
+                                                            <small>Cancel</small> </button>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -274,16 +274,16 @@
                                                 <tr>
                                                     <td>My Email </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>farhan_aslam@gmail.com </td>
+                                                    <td>{{ Auth::user()->email }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <!-- on click show this 3rd tab div -->
                                         <div class="form-card d-none" id="editemail">
-                                            <p>Fundrise uses this email address to contact you with important information regarding the status of your account. Please keep it current.</p>
-                                            <label for="exampleFormControlInput1">ADDRESS LINE 1</label>
-                                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                            <p>HYIPLAB uses this email address to contact you with important information regarding the status of your account. Please keep it current.</p>
+                                            <label for="email">ADDRESS LINE 1</label>
+                                            <input type="email" name="email" disabled value="{{ Auth::user()->email }}" class="form-control" id="email" placeholder="">
                                             <small>This should be the address used for tax purposes</small>
                                             <div class="row">
                                                 <div class="col">
@@ -292,11 +292,11 @@
                                                     <small>Cancel</small> </button>
                                                     </div>
                                                 </div>
-                                                <div class="col">
+                                                {{-- <div class="col">
                                                     <div class=" d-flex justify-content-end   pt-4">
                                                         <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Save </button>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -311,41 +311,43 @@
                                                 <tr>
                                                     <td>Password </td>
                                                     <td colspan="5" class="d-flex"></td>
-                                                    <td>******* </td>
+                                                    <td>*******</td>
                                                 </tr>
                                             </tbody>
                                         </table>
 
                                         <!-- on click show this 4rd tab div -->
-                                        <div class="form-card d-none" id="editpass">
-                                            <p>To change your password, enter your current password and then create a new one using the following form.</p>
-                                            <label for="exampleFormControlInput1">CURRENT PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="password">
-                                            <br>
-                                            <label for="exampleFormControlInput1">NEW PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="New password">
-                                            <small>Must be at least 8 characters long, and must include one letter and one number</small>
+                                        <form id="password-form">
+                                            <div class="form-card d-none" id="editpass">
+                                                <p>To change your password, enter your current password and then create a new one using the following form.</p>
+                                                <label for="current_password">CURRENT PASSWORD</label>
+                                                <input type="password" class="form-control" id="current_password" placeholder="password">
+                                                <br>
+                                                <label for="new_password">NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="new_password" placeholder="New password">
+                                                <small>Must be at least 8 characters long, and must include one letter and one number</small>
 
-                                            <br><br>
-                                            <label for="exampleFormControlInput1">CONFIRM NEW PASSWORD</label>
-                                            <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Confirm New password">
-                                            <small>Type your new password again.</small>
+                                                <br><br>
+                                                <label for="confirm_password">CONFIRM NEW PASSWORD</label>
+                                                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm New password">
+                                                <small>Type your new password again.</small>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-start    pt-4">
-                                                        <button id="cancel_edit_pass" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
-                                                          <small>Cancel</small> </button>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-start    pt-4">
+                                                            <button id="cancel_edit_pass" type="submit" class="button  bg-light text-dark button-fundrise-orange" data-test="lead-capture-submit">
+                                                            <small>Cancel</small> </button>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-end pt-4">
-                                                        <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Change Password </button>
+                                                    <div class="col">
+                                                        <div class=" d-flex justify-content-end pt-4">
+                                                            <button type="submit" class="button  button-fundrise-orange" data-test="lead-capture-submit"> Change Password </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- 4rd  tab ends -->
 
@@ -766,6 +768,112 @@
 @endsection
 @section('js')
 <script>
+    $('#password-form').on('submit',function(e){
+        e.preventDefault();
+        let current_password = $('#current_password').val();
+        let new_password = $('#new_password').val();
+        let confirm_password = $('#confirm_password').val();
+        // console.log(current_password+' -- '+new_password+' -- '+confirm_password);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{ url('user/profile-setting') }}",
+            type:"POST",
+            data:{
+                current_password : current_password,
+                new_password : new_password,
+                confirm_password : confirm_password,
+            },
+            
+            success:function(response){
+                console.log(response);
+                /* if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated personal information successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                } */
+            },
+            error: function(response) {
+                $('#error-firstname').text(response.responseJSON.errors.firstname);
+                $('#error-lastname').text(response.responseJSON.errors.lastname);
+                $('#error-address_first').text(response.responseJSON.errors.address_first);
+                $('#error-state').text(response.responseJSON.errors.state);
+                $('#error-zip').text(response.responseJSON.errors.zip);
+                $('#error-city').text(response.responseJSON.errors.city);
+                $('#error-country').text(response.responseJSON.errors.country);
+            },
+        });
+    });
+
+    $('#personal-info-form').on('submit',function(e){
+        e.preventDefault();
+        let firstname = $('#firstname').val();
+        let lastname = $('#lastname').val();
+        let address_first = $('#address_first').val();
+        let address_second = $('#address_second').val();
+        let city = $('#city').val();
+        let state = $('#state').val();
+        let zip = $('#zip').val();
+        let country = $('#country').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{ url('user/profile-setting') }}",
+            type:"POST",
+            data:{
+                firstname : firstname,
+                lastname : lastname,
+                address_first : address_first,
+                address_second : address_second,
+                state : state,
+                zip : zip,
+                city : city,
+                country : country,
+            },
+            
+            success:function(response){
+                if(response=='success'){
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'You have updated personal information successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong try again.',
+                    })
+                }
+            },
+            error: function(response) {
+                $('#error-firstname').text(response.responseJSON.errors.firstname);
+                $('#error-lastname').text(response.responseJSON.errors.lastname);
+                $('#error-address_first').text(response.responseJSON.errors.address_first);
+                $('#error-state').text(response.responseJSON.errors.state);
+                $('#error-zip').text(response.responseJSON.errors.zip);
+                $('#error-city').text(response.responseJSON.errors.city);
+                $('#error-country').text(response.responseJSON.errors.country);
+            },
+        });
+    });
+
     $('.edit_info_class').click(function(event) {
         event.preventDefault();
         $('#viewinfo').removeClass('d-block');

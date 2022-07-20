@@ -65,27 +65,25 @@ Route::prefix('ticket')->group(function () {
     Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | Start Admin Area
 |--------------------------------------------------------------------------
 */
 
-
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
-        Route::get('/', 'LoginController@showLoginForm')->name('login');
-        Route::post('/', 'LoginController@login')->name('login');
-        Route::get('logout', 'LoginController@logout')->name('logout');
-        // Admin Password Reset
-        Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
-        Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
-        Route::post('password/verify-code', 'ForgotPasswordController@verifyCode')->name('password.verify-code');
-        Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.change-link');
-        Route::post('password/reset/change', 'ResetPasswordController@reset')->name('password.change');
-    });
+      Route::get('/', 'LoginController@showLoginForm')->name('login');
+      Route::post('/', 'LoginController@login')->name('login');
+      Route::get('logout', 'LoginController@logout')->name('logout');
 
+      // Admin Password Reset
+      Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+      Route::post('password/reset', 'ForgotPasswordController@sendResetLinkEmail');
+      Route::post('password/verify-code', 'ForgotPasswordController@verifyCode')->name('password.verify-code');
+      Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.change-link');
+      Route::post('password/reset/change', 'ResetPasswordController@reset')->name('password.change');
+    });
 
     Route::middleware(['admin'])->group(function () {
         Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
@@ -93,7 +91,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('profile', 'AdminController@profileUpdate')->name('profile.update');
         Route::get('password', 'AdminController@password')->name('password');
         Route::post('password', 'AdminController@passwordUpdate')->name('password.update');
-
 
         //Notification
         Route::get('notifications','AdminController@notifications')->name('notifications');
@@ -161,7 +158,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('users/email-log/{id}', 'ManageUsersController@emailLog')->name('users.email.log');
         Route::get('users/email-details/{id}', 'ManageUsersController@emailDetails')->name('users.email.details');
 
-
         // Subscriber
         Route::get('subscriber', 'SubscriberController@index')->name('subscriber.index');
         Route::get('subscriber/send-email', 'SubscriberController@sendEmailForm')->name('subscriber.sendEmail');
@@ -202,11 +198,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('report/transaction/interest-wallet', 'ReportController@transactionInterest')->name('report.transaction.interest');
         Route::get('report/transaction/search', 'ReportController@transactionSearch')->name('report.transaction.search');
 
-
         //Invest Report
         Route::get('report/plan', 'ReportController@plan')->name('report.plan');
         Route::get('report/plan/search', 'ReportController@planSearch')->name('report.plan.search');
-
 
         //Commission Report
         Route::get('report/commissions/deposit', 'ReportController@commissionsDeposit')->name('report.commissions.deposit');
@@ -214,13 +208,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('report/commissions/interest', 'ReportController@commissionsInterest')->name('report.commissions.interest');
         Route::get('report/commissions/search', 'ReportController@commissionsSearch')->name('report.commissions.search');
 
-
         //Promotional Banner
         Route::get('promotional-tool', 'PromotionalToolController@index')->name('promotional.tool.index');
         Route::post('promotional-tool/store', 'PromotionalToolController@store')->name('promotional.tool.store');
         Route::post('promotional-tool/update/{id}', 'PromotionalToolController@update')->name('promotional.tool.update');
         Route::post('promotional-tool/remove/{id}', 'PromotionalToolController@remove')->name('promotional.tool.remove');
-
 
         // WITHDRAW SYSTEM
         Route::get('withdraw/pending', 'WithdrawalController@pending')->name('withdraw.pending');
@@ -232,7 +224,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('withdraw/approve', 'WithdrawalController@approve')->name('withdraw.approve');
         Route::post('withdraw/reject', 'WithdrawalController@reject')->name('withdraw.reject');
 
-
         // Withdraw Method
         Route::get('withdraw/method/', 'WithdrawMethodController@methods')->name('withdraw.method.index');
         Route::get('withdraw/method/create', 'WithdrawMethodController@create')->name('withdraw.method.create');
@@ -241,7 +232,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('withdraw/method/edit/{id}', 'WithdrawMethodController@update')->name('withdraw.method.update');
         Route::post('withdraw/method/activate', 'WithdrawMethodController@activate')->name('withdraw.method.activate');
         Route::post('withdraw/method/deactivate', 'WithdrawMethodController@deactivate')->name('withdraw.method.deactivate');
-
 
         // Admin Support
         Route::get('tickets', 'SupportTicketController@tickets')->name('ticket');
@@ -252,7 +242,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::put('ticket/reply/{id}', 'SupportTicketController@ticketReplySend')->name('ticket.reply');
         Route::get('ticket/download/{ticket}', 'SupportTicketController@ticketDownload')->name('ticket.download');
         Route::post('ticket/delete', 'SupportTicketController@ticketDelete')->name('ticket.delete');
-
 
         // Language Manager
         Route::get('/language', 'LanguageController@langManage')->name('language-manage');
@@ -298,7 +287,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('plugin/activate', 'PluginController@activate')->name('plugin.activate');
         Route::post('plugin/deactivate', 'PluginController@deactivate')->name('plugin.deactivate');
 
-
         // Email Setting
         Route::get('email-template/global', 'EmailTemplateController@emailTemplate')->name('email-template.global');
         Route::post('email-template/global', 'EmailTemplateController@emailTemplateUpdate')->name('email-template.global');
@@ -308,7 +296,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('email-template/{id}/edit', 'EmailTemplateController@edit')->name('email-template.edit');
         Route::post('email-template/{id}/update', 'EmailTemplateController@update')->name('email-template.update');
         Route::post('email-template/send-test-mail', 'EmailTemplateController@sendTestMail')->name('email-template.sendTestMail');
-
 
         // SMS Setting
         Route::get('sms-template/global', 'SmsTemplateController@smsTemplate')->name('sms.template.global');
@@ -325,25 +312,22 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // Frontend
         Route::name('frontend.')->prefix('frontend')->group(function () {
-            Route::get('templates', 'FrontendController@templates')->name('templates');
-            Route::post('templates', 'FrontendController@templatesActive')->name('templates.active');
+          Route::get('templates', 'FrontendController@templates')->name('templates');
+          Route::post('templates', 'FrontendController@templatesActive')->name('templates.active');
 
+          Route::get('frontend-sections/{key}', 'FrontendController@frontendSections')->name('sections');
+          Route::post('frontend-content/{key}', 'FrontendController@frontendContent')->name('sections.content');
+          Route::get('frontend-element/{key}/{id?}', 'FrontendController@frontendElement')->name('sections.element');
+          Route::post('remove', 'FrontendController@remove')->name('remove');
 
-            Route::get('frontend-sections/{key}', 'FrontendController@frontendSections')->name('sections');
-            Route::post('frontend-content/{key}', 'FrontendController@frontendContent')->name('sections.content');
-            Route::get('frontend-element/{key}/{id?}', 'FrontendController@frontendElement')->name('sections.element');
-            Route::post('remove', 'FrontendController@remove')->name('remove');
-
-            // Page Builder
-            Route::get('manage-pages', 'PageBuilderController@managePages')->name('manage.pages');
-            Route::post('manage-pages', 'PageBuilderController@managePagesSave')->name('manage.pages.save');
-            Route::patch('manage-pages', 'PageBuilderController@managePagesUpdate')->name('manage.pages.update');
-            Route::delete('manage-pages', 'PageBuilderController@managePagesDelete')->name('manage.pages.delete');
-            Route::get('manage-section/{id}', 'PageBuilderController@manageSection')->name('manage.section');
-            Route::post('manage-section/{id}', 'PageBuilderController@manageSectionUpdate')->name('manage.section.update');
+          // Page Builder
+          Route::get('manage-pages', 'PageBuilderController@managePages')->name('manage.pages');
+          Route::post('manage-pages', 'PageBuilderController@managePagesSave')->name('manage.pages.save');
+          Route::patch('manage-pages', 'PageBuilderController@managePagesUpdate')->name('manage.pages.update');
+          Route::delete('manage-pages', 'PageBuilderController@managePagesDelete')->name('manage.pages.delete');
+          Route::get('manage-section/{id}', 'PageBuilderController@manageSection')->name('manage.section');
+          Route::post('manage-section/{id}', 'PageBuilderController@manageSectionUpdate')->name('manage.section.update');
         });
-
-
     });
 });
 
@@ -372,7 +356,6 @@ Route::name('user.')->group(function () {
 });
 
 Route::name('user.')->prefix('user')->group(function () {
-
     Route::middleware('auth')->group(function () {
         Route::get('authorization', 'AuthorizationController@authorizeForm')->name('authorization');
         Route::get('resend-verify', 'AuthorizationController@sendVerifyCode')->name('send_verify_code');
@@ -383,13 +366,6 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::middleware(['checkStatus'])->group(function () {
             Route::get('dashboard', 'UserController@home')->name('home');
 
-<<<<<<< HEAD
-            //customization
-            Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
-            Route::post('profile-setting', 'UserController@submitProfile');
-=======
-            
->>>>>>> 79c11098b518c07eb3d2cfb41a0abe95453e0408
             Route::get('change-password', 'UserController@changePassword')->name('change-password');
             Route::post('change-password', 'UserController@submitPassword');
 
@@ -417,28 +393,21 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/withdraw/preview', 'UserController@withdrawPreview')->name('withdraw.preview');
             Route::post('/withdraw/preview', 'UserController@withdrawSubmit')->name('withdraw.submit');
             Route::get('/withdraw/history', 'UserController@withdrawLog')->name('withdraw.history');
-
             // Transaction
 
-
             // Customization
+            Route::get('transactions', 'UserController@transactions')->name('transactions');
 
- Route::get('transactions', 'UserController@transactions')->name('transactions');
+            Route::get('performance', 'UserController@performance')->name('performance');
 
-  Route::get('performance', 'UserController@performance')->name('performance');
+            Route::get('portfolio', 'UserController@portfolio')->name('portfolio');
 
+            Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
+            Route::post('profile-setting', 'UserController@submitProfile');
 
-  Route::get('portfolio', 'UserController@portfolio')->name('portfolio');
-
-
-  Route::get('profile-setting', 'UserController@profile')->name('profile-setting');
-
-  Route::post('add_joint_account', 'JointAccountController@add_joint_account')->name('add.joint.account');
-
-
+            Route::post('add_joint_account', 'JointAccountController@add_joint_account')->name('add.joint.account');
 
             //end of customization
-
             Route::get('transactions/deposit-wallet', 'UserController@transactionsDeposit')->name('transactions.deposit');
             Route::get('transactions/interest-wallet', 'UserController@transactionsInterest')->name('transactions.interest');
 
